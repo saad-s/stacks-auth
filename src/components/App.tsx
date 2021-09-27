@@ -1,28 +1,50 @@
-import React, { memo } from 'react';
-import '../App.css';
-import { useAuthOptions } from '../common/hooks/use-auth-options';
-import { ThemeProvider, ColorModeProvider } from "@stacks/ui";
-import { Connect } from '@stacks/connect-react';
-import { UserArea } from './user-area';
+import React, { memo } from "react";
+import "../App.css";
+import { useAuthOptions } from "../common/hooks/use-auth-options";
+import { ThemeProvider, ColorModeProvider, Flex, color } from "@stacks/ui";
+import { Connect } from "@stacks/connect-react";
+import { ContractInfoPanel } from "./contract-info-panel";
+import { Header } from "./header";
+import { ContractPanel } from "./contract-panel";
+import { UserArea } from "./user-area";
 
 const AppWrapper: React.FC = memo(({ children }) => {
   let authOptions = useAuthOptions();
 
   return (
     <ThemeProvider>
-      <ColorModeProvider defaultMode='light'>
+      <ColorModeProvider defaultMode="light">
         <Connect authOptions={authOptions}>{children}</Connect>
       </ColorModeProvider>
     </ThemeProvider>
   );
-
 });
 
 function App() {
   return (
     <AppWrapper>
-      <UserArea />
-    </AppWrapper> 
+      <Flex
+        bg={color("bg-4")}
+        flexDirection="column"
+        minHeight="100vh"
+        Width="100vw"
+        p="base"
+      >
+        <Flex
+          bg={color("bg")}
+          flexDirection="column"
+          flexGrow={1}
+          borderRadius="24px"
+        >
+          <Header />
+          <UserArea />
+          <Flex p="base" flexGrow={1}>
+            <ContractInfoPanel />
+            <ContractPanel />
+          </Flex>
+        </Flex>
+      </Flex>
+    </AppWrapper>
   );
 }
 
